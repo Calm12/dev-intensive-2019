@@ -31,7 +31,7 @@ class User(
         private var avatar: String? = null,
         private var rating: Int = 0,
         private var respect: Int = 0,
-        private var lastVisit: Date? = null,
+        private var lastVisit: Date? = Date(),
         private var isOnline: Boolean = false
     ) {
         fun id(id: String) = apply { this.id = id }
@@ -69,5 +69,35 @@ class User(
                 lastName = lastName
             )
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as User
+
+        if (id != other.id) return false
+        if (firstName != other.firstName) return false
+        if (lastName != other.lastName) return false
+        if (avatar != other.avatar) return false
+        if (rating != other.rating) return false
+        if (respect != other.respect) return false
+        if (lastVisit != other.lastVisit) return false
+        if (isOnline != other.isOnline) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + (firstName?.hashCode() ?: 0)
+        result = 31 * result + (lastName?.hashCode() ?: 0)
+        result = 31 * result + (avatar?.hashCode() ?: 0)
+        result = 31 * result + rating
+        result = 31 * result + respect
+        result = 31 * result + (lastVisit?.hashCode() ?: 0)
+        result = 31 * result + isOnline.hashCode()
+        return result
     }
 }
